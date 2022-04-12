@@ -46,6 +46,7 @@ public class Main {
         console.setForegroundColor(Ansi.FColor.WHITE);
         console.println("Mock is " + (isMock ? "enabled" : "disabled"));
 
+//        getRandomPosition(4,4);
         InitializeGame();
 
         StartGame();
@@ -159,7 +160,7 @@ public class Main {
     
     public static Position getRandomPosition(int rows, int cols) {
         Random random = new Random();
-        Letter letter = Letter.values()[random.nextInt(cols)]; //todo make field smaller
+        Letter letter = Letter.values()[random.nextInt(cols)];
         int number = random.nextInt(rows);
         Position position = new Position(letter, number);
         return position;
@@ -167,7 +168,7 @@ public class Main {
     
     public static Position getRandomPosition(BattleField bf) {
         Random random = new Random();
-        Letter letter = Letter.values()[random.nextInt(bf.cols)]; //todo make field smaller
+        Letter letter = Letter.values()[random.nextInt(bf.cols)];
         int number = random.nextInt(bf.rows);
         Position position = new Position(letter, number);
         boolean success = bf.removePosition(position);
@@ -226,6 +227,9 @@ public class Main {
         } else {
             enemyFleet.get(0).getPositions().add(new Position(Letter.A, 5));
             enemyFleet.get(0).getPositions().add(new Position(Letter.A, 6));
+            enemyFleet.get(1).getPositions().add(new Position(Letter.B, 5));
+            enemyFleet.get(1).getPositions().add(new Position(Letter.B, 6));
+
         }
     }
 }
