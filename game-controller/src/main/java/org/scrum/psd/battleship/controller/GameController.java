@@ -36,7 +36,8 @@ public class GameController {
     public static List<Ship> initializeShips(boolean isMock) {
         if (isMock) {
             return Arrays.asList(
-                    new Ship("Patrol Boat", 2, Color.ORANGE));
+                    new Ship("Patrol Boat", 2, Color.ORANGE),
+                    new Ship("Second Patrol Boat", 2, Color.YELLOW));
         } else {
             return Arrays.asList(
                     new Ship("Aircraft Carrier", 5, Color.CADET_BLUE),

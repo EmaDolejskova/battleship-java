@@ -76,7 +76,7 @@ public class Main {
             position = getComputerRandomPosition(battleField);
             isHit = GameController.checkIsHit(myFleet, position);
             console.println("");
-            if (isHit) console.setForegroundColor(Ansi.FColor.RED);
+            if (isHit) console.setForegroundColor(Ansi.FColor.MAGENTA);
             else console.setForegroundColor(Ansi.FColor.BLUE);
             console.println(String.format("Computer shoot in %s%s and %s", position.getColumn(), position.getRow(), isHit ? "hit your ship !" : "miss"));
 
