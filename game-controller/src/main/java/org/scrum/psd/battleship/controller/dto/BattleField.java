@@ -6,6 +6,7 @@
 package org.scrum.psd.battleship.controller.dto;
 
 import java.awt.PageAttributes;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.TreeSet;
 
@@ -22,10 +23,12 @@ public class BattleField {
         this.availablePositions = allAvailablePositions();
     }
     
-    private HashSet<Position> availablePositions;
-    
-    public HashSet<Position> allAvailablePositions() {
-        HashSet<Position> ap = new HashSet<Position>();
+    private ArrayList<Position> availablePositions;
+    public ArrayList<Position> getAllAvailablePositions(){
+        return this.availablePositions;
+    }
+    private ArrayList<Position> allAvailablePositions() {
+        ArrayList<Position> ap = new ArrayList<Position>();
 
         for (int i = 1; i <= this.cols; i++) {
             for (int j = 1; j <= this.rows; j++) {

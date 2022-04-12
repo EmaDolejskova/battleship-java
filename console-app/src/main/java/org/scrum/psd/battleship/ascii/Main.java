@@ -46,7 +46,7 @@ public class Main {
         console.setForegroundColor(Ansi.FColor.WHITE);
         console.println("Mock is " + (isMock ? "enabled" : "disabled"));
 
-//        getRandomPosition(4,4);
+        getPosition();
         InitializeGame();
 
         StartGame();
@@ -157,7 +157,7 @@ public class Main {
     public static Position getRandomPosition() {
         return getRandomPosition(battleField.rows, battleField.cols);
     }
-    
+
     public static Position getRandomPosition(int rows, int cols) {
         Random random = new Random();
         Letter letter = Letter.values()[random.nextInt(cols)];
@@ -165,7 +165,7 @@ public class Main {
         Position position = new Position(letter, number);
         return position;
     }
-    
+
     public static Position getRandomPosition(BattleField bf) {
         Random random = new Random();
         Letter letter = Letter.values()[random.nextInt(bf.cols)];
@@ -174,6 +174,18 @@ public class Main {
         boolean success = bf.removePosition(position);
         System.out.println("Remove of " + position + " succeeded? " + success);
         return position;
+    }
+
+    public static void getPosition() {
+        BattleField bf = new BattleField(4, 4);
+        for (int i = 0; i < bf.getAllAvailablePositions().size(); i++) { // Peto tady to vraci 8 a ne 16
+            // generating the index using Math.random()
+            int index = (int) (Math.random() * bf.getAllAvailablePositions().size());
+            Position now = bf.getAllAvailablePositions().get(index);
+            System.out.println("Random Element is :"
+                    + now);
+            bf.removePosition(now);
+        }
     }
 
     private static void InitializeGame() {
