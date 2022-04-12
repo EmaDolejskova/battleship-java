@@ -8,6 +8,7 @@ import org.scrum.psd.battleship.controller.dto.LetterMock;
 import org.scrum.psd.battleship.controller.dto.Position;
 import org.scrum.psd.battleship.controller.dto.Ship;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -16,7 +17,7 @@ public class Main {
     private static List<Ship> myFleet;
     private static List<Ship> enemyFleet;
     private static ColoredPrinter console;
-    private static boolean isMock = true;
+    private static boolean isMock = false;
 
     public static void main(String[] args) {
         console = new ColoredPrinter.Builder(1, false).background(Ansi.BColor.BLACK).foreground(Ansi.FColor.WHITE).build();
@@ -92,12 +93,27 @@ public class Main {
     }
 
     private static void playersTurnPrint() {
+        List<Ship> enemySunkFleet = getDestroyedShips(true, enemyFleet);
+        List<Ship> enemyRemainingFleet = getDestroyedShips(false, enemyFleet);
+
         console.setForegroundColor(Ansi.FColor.GREEN);
         console.println("");
         console.println("Player, it's your turn");
+        console.println("Ships to destroy: " + enemyRemainingFleet.toString());
+        console.println("Ships destroyed:" + enemyRemainingFleet.toString());
         console.println("-=ACTION=-: Enter coordinates for your shot :");
         separatorPrint();
         console.setForegroundColor(Ansi.FColor.WHITE);
+    }
+
+    private static List<Ship> getDestroyedShips(boolean destroyed, List<Ship> fleet) {
+        List<Ship> newFleetList = new ArrayList<>();
+        for (Ship ship : fleet) {
+            if (ship.isDestroyed() == destroyed) {
+                newFleetList.add(ship);
+            }
+        }
+        return newFleetList;
     }
 
     private static void hitPrint() {

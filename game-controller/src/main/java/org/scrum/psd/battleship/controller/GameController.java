@@ -23,6 +23,7 @@ public class GameController {
         for (Ship ship : ships) {
             for (Position position : ship.getPositions()) {
                 if (position.equals(shot)) {
+                    position.setHit(true);
                     return true;
                 }
             }
@@ -35,7 +36,7 @@ public class GameController {
         if (isMock) {
             return Arrays.asList(
                     new Ship("Patrol Boat", 2, Color.ORANGE));
-        }else{
+        } else {
             return Arrays.asList(
                     new Ship("Aircraft Carrier", 5, Color.CADET_BLUE),
                     new Ship("Battleship", 4, Color.RED),
