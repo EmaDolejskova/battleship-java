@@ -4,7 +4,6 @@ import com.diogonunes.jcdp.color.ColoredPrinter;
 import com.diogonunes.jcdp.color.api.Ansi;
 import org.scrum.psd.battleship.controller.GameController;
 import org.scrum.psd.battleship.controller.dto.Letter;
-import org.scrum.psd.battleship.controller.dto.LetterMock;
 import org.scrum.psd.battleship.controller.dto.Position;
 import org.scrum.psd.battleship.controller.dto.Ship;
 import org.scrum.psd.battleship.controller.dto.BattleField;
@@ -46,9 +45,7 @@ public class Main {
         console.setForegroundColor(Ansi.FColor.WHITE);
         console.println("Mock is " + (isMock ? "enabled" : "disabled"));
 
-        //getPosition();
         InitializeGame();
-
         StartGame();
     }
 
@@ -73,7 +70,10 @@ public class Main {
                 System.exit(0);
             }
             console.setForegroundColor(Ansi.FColor.WHITE);
-            position = getRandomPosition();
+            // Computer is trying hit with Random to position
+//            position = getRandomPosition();
+
+            position = getComputerRandomPosition(battleField);
             isHit = GameController.checkIsHit(myFleet, position);
             console.println("");
             if (isHit) console.setForegroundColor(Ansi.FColor.RED);
@@ -176,16 +176,16 @@ public class Main {
         return position;
     }
 
-    public static void getPosition() {
-        BattleField bf = new BattleField(4, 4);
-        for (int i = 0; i < bf.getAllAvailablePositions().size(); i++) { // Peto tady to vraci 8 a ne 16
-            // generating the index using Math.random()
+    public static Position getComputerRandomPosition(BattleField bf) {
+//        int size = bf.getAllAvailablePositions().size();
+//        for (int i = 0; i < size; i++) {
+//            System.out.println("size="+ bf.getAllAvailablePositions().size());
             int index = (int) (Math.random() * bf.getAllAvailablePositions().size());
             Position now = bf.getAllAvailablePositions().get(index);
-            System.out.println("Random Element is :"
-                    + now);
+//            System.out.println("Random Element is :" + now);
             bf.removePosition(now);
-        }
+            return now;
+//        }
     }
 
     private static void InitializeGame() {

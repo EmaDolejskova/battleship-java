@@ -30,11 +30,11 @@ public class BattleField {
     private ArrayList<Position> allAvailablePositions() {
         ArrayList<Position> ap = new ArrayList<Position>();
 
-        for (int i = 1; i <= this.cols; i++) {
+        for (int i = 0; i <= this.cols-1; i++) {
             for (int j = 1; j <= this.rows; j++) {
                 Position p = new Position(Letter.letterFromNumber(i), j);
                 ap.add(p);
-                System.out.println("Added position: " + p);
+//                System.out.println("Added position: " + p);
             }
         }
         
