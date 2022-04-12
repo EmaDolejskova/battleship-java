@@ -7,6 +7,7 @@ import org.scrum.psd.battleship.controller.dto.Letter;
 import org.scrum.psd.battleship.controller.dto.LetterMock;
 import org.scrum.psd.battleship.controller.dto.Position;
 import org.scrum.psd.battleship.controller.dto.Ship;
+import org.scrum.psd.battleship.controller.dto.BattleField;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,8 @@ public class Main {
     public static List<Ship> enemyFleet;
     private static ColoredPrinter console;
     public static boolean isMock = true;
+
+    private static BattleField battleField = isMock ? new BattleField(4, 4) : new BattleField(8, 8);
 
     public static void main(String[] args) {
         if (args.length > 0) {
@@ -150,25 +153,25 @@ public class Main {
         return new Position(letter, number);
     }
 
-    private static Position getRandomPosition() {
-        int rows;
-        int lines;
-        Letter letter;
-        if (isMock) {
-            rows = 4;
-             lines = 4;
-        }else{
-             rows = 8;
-             lines = 8;
-        }
+    public static Position getRandomPosition() {
+        return getRandomPosition(battleField.rows, battleField.cols);
+    }
+    
+    public static Position getRandomPosition(int rows, int cols) {
         Random random = new Random();
-        if(isMock) {
-            letter = Letter.values()[random.nextInt(lines)];
-        }else{
-            letter = Letter.values()[random.nextInt(lines)]; //todo make field smaller
-        }
+        Letter letter = Letter.values()[random.nextInt(cols)]; //todo make field smaller
         int number = random.nextInt(rows);
         Position position = new Position(letter, number);
+        return position;
+    }
+    
+    public static Position getRandomPosition(BattleField bf) {
+        Random random = new Random();
+        Letter letter = Letter.values()[random.nextInt(bf.cols)]; //todo make field smaller
+        int number = random.nextInt(bf.rows);
+        Position position = new Position(letter, number);
+        boolean success = bf.removePosition(position);
+        System.out.println("Remove of " + position + " succeeded? " + success);
         return position;
     }
 

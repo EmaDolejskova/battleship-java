@@ -54,4 +54,8 @@ public class Position {
 
         return false;
     }
+    
+    public String toString() {
+        return "" + this.column + this.row;
+    }
 }
