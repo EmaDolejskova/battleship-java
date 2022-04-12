@@ -60,6 +60,10 @@ public class Main {
             separatorPrint();
             console.println(isHit ? "Yeah ! Nice hit !" : "You missed ;( ");
             separatorPrint();
+            if (getDestroyedShips(false, enemyFleet).size() == 0) {
+                console.println("Yeah ! You WON !");
+                System.exit(0);
+            }
             console.setForegroundColor(Ansi.FColor.WHITE);
             position = getRandomPosition();
             isHit = GameController.checkIsHit(myFleet, position);
@@ -71,9 +75,12 @@ public class Main {
             if (isHit) {
                 beep();
                 hitPrint();
-
             }
             separatorPrint();
+            if (getDestroyedShips(false, myFleet).size() == 0) {
+                console.println("Yeah ! You LOST !");
+                System.exit(0);
+            }
             console.setForegroundColor(Ansi.FColor.WHITE);
         } while (true);
     }
