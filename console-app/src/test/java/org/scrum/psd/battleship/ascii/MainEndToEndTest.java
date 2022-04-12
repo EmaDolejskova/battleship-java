@@ -23,7 +23,7 @@ public class MainEndToEndTest {
 
             Main.main(new String[]{});
         } catch(NoSuchElementException e) {
-            Assert.assertTrue(systemOutRule.getLog().contains("Welcome to Battleship"));
+            Assert.assertTrue(systemOutRule.getLog().contains("Welcome to Brikulnici Battleship"));
             Assert.assertTrue(systemOutRule.getLog().contains("Yeah ! Nice hit !"));
         }
     }
@@ -35,8 +35,8 @@ public class MainEndToEndTest {
 
             Main.main(new String[]{});
         } catch(NoSuchElementException e) {
-            Assert.assertTrue(systemOutRule.getLog().contains("Welcome to Battleship"));
-            Assert.assertTrue(systemOutRule.getLog().contains("Miss"));
+            Assert.assertTrue(systemOutRule.getLog().contains("Welcome to Brikulnici Battleship"));
+            Assert.assertTrue(systemOutRule.getLog().contains("You missed"));
         }
     }
 }

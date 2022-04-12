@@ -12,7 +12,7 @@ import java.util.List;
 public class GameControllerTest {
     @Test
     public void testCheckIsHitTrue() {
-        List<Ship> ships = GameController.initializeShips();
+        List<Ship> ships = GameController.initializeShips(true);
         int counter = 0;
 
         for (Ship ship : ships) {
