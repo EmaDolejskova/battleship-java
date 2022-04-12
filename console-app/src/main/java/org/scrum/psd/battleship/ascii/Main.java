@@ -17,7 +17,7 @@ public class Main {
     private static List<Ship> myFleet;
     private static List<Ship> enemyFleet;
     private static ColoredPrinter console;
-    private static boolean isMock = false;
+    private static boolean isMock = true;
 
     public static void main(String[] args) {
         console = new ColoredPrinter.Builder(1, false).background(Ansi.BColor.BLACK).foreground(Ansi.FColor.WHITE).build();
@@ -60,6 +60,10 @@ public class Main {
             separatorPrint();
             console.println(isHit ? "Yeah ! Nice hit !" : "You missed ;( ");
             separatorPrint();
+            if (getDestroyedShips(false, enemyFleet).size() == 0) {
+                console.println("Yeah ! You WON !");
+                System.exit(0);
+            }
             console.setForegroundColor(Ansi.FColor.WHITE);
             position = getRandomPosition();
             isHit = GameController.checkIsHit(myFleet, position);
@@ -71,8 +75,8 @@ public class Main {
             if (isHit) {
                 beep();
                 hitPrint();
-
             }
+
             separatorPrint();
             console.setForegroundColor(Ansi.FColor.WHITE);
         } while (true);
@@ -100,7 +104,7 @@ public class Main {
         console.println("");
         console.println("Player, it's your turn");
         console.println("Ships to destroy: " + enemyRemainingFleet.toString());
-        console.println("Ships destroyed:" + enemyRemainingFleet.toString());
+        console.println("Ships destroyed:" + enemySunkFleet.toString());
         console.println("-=ACTION=-: Enter coordinates for your shot :");
         separatorPrint();
         console.setForegroundColor(Ansi.FColor.WHITE);
@@ -172,7 +176,7 @@ public class Main {
 
     private static void InitializeMyFleet() {
         Scanner scanner = new Scanner(System.in);
-        myFleet = GameController.initializeShips(true);
+        myFleet = GameController.initializeShips(isMock);
 
         console.println("Please position your fleet (Game board has size from A to H and 1 to 8) :");
 
