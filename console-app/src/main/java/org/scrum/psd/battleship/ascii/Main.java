@@ -46,7 +46,7 @@ public class Main {
         console.setForegroundColor(Ansi.FColor.WHITE);
         console.println("Mock is " + (isMock ? "enabled" : "disabled"));
 
-        getPosition();
+        //getPosition();
         InitializeGame();
 
         StartGame();
