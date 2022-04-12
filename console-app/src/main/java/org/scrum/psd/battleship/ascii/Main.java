@@ -20,6 +20,9 @@ public class Main {
     private static boolean isMock = false;
 
     public static void main(String[] args) {
+        if (args.length > 0) {
+            Main.isMock = Boolean.valueOf(args[0]);
+        }
         console = new ColoredPrinter.Builder(1, false).background(Ansi.BColor.BLACK).foreground(Ansi.FColor.WHITE).build();
 
         console.setForegroundColor(Ansi.FColor.MAGENTA);
@@ -34,10 +37,11 @@ public class Main {
         console.println("                    +---------------___[}-_===_.'____                 /\\");
         console.println("                ____`-' ||___-{]_| _[}-  |     |_[___\\==--            \\/   _");
         console.println(" __..._____--==/___]_|__|_____________________________[___\\==--____,------' .7");
-        console.println("|                        Welcome to Brikulnici Battleship                         BB-61/");
+        console.println("|                        Welcome to Brikulnici Battleship               BB-61/");
         console.println(" \\_________________________________________________________________________|");
         console.println("");
         console.setForegroundColor(Ansi.FColor.WHITE);
+        console.println("Mock is " + (isMock ? "enabled" : "disabled"));
 
         InitializeGame();
 
