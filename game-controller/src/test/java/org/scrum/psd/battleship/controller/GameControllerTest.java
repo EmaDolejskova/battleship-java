@@ -32,7 +32,7 @@ public class GameControllerTest {
 
     @Test
     public void testCheckIsHitFalse() {
-        List<Ship> ships = GameController.initializeShips();
+        List<Ship> ships = GameController.initializeShips(true);
         int counter = 0;
 
         for (Ship ship : ships) {
@@ -52,7 +52,7 @@ public class GameControllerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testCheckIsHitPositstionIsNull() {
-        GameController.checkIsHit(GameController.initializeShips(), null);
+        GameController.checkIsHit(GameController.initializeShips(true), null);
     }
 
     @Test(expected = IllegalArgumentException.class)
