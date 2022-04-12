@@ -49,6 +49,15 @@ public class Ship {
 
     }
 
+    public boolean isDestroyed() {
+        for (Position position : positions) {
+            if (!position.getHit()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // TODO: property change listener implementieren
 
     public boolean isPlaced() {
@@ -89,5 +98,10 @@ public class Ship {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
