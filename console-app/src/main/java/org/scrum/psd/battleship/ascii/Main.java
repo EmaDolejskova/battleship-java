@@ -15,9 +15,9 @@ import java.util.Scanner;
 
 public class Main {
     private static List<Ship> myFleet;
-    private static List<Ship> enemyFleet;
+    public static List<Ship> enemyFleet;
     private static ColoredPrinter console;
-    private static boolean isMock = true;
+    public static boolean isMock = true;
 
     public static void main(String[] args) {
         if (args.length > 0) {
@@ -197,7 +197,7 @@ public class Main {
     }
 
     private static void InitializeEnemyFleet() {
-        enemyFleet = GameController.initializeShips(isMock);
+        enemyFleet = GameController.generatedShips(isMock);
         if (!isMock) {
             enemyFleet.get(0).getPositions().add(new Position(Letter.B, 4));
             enemyFleet.get(0).getPositions().add(new Position(Letter.B, 5));

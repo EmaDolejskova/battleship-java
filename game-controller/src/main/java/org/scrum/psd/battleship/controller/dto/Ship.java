@@ -7,7 +7,7 @@ public class Ship {
     private boolean isPlaced;
     private String name;
     private int size;
-    private List<Position> positions;
+    public List<Position> positions;
     private Color color;
 
     public Ship() {
@@ -33,6 +33,7 @@ public class Ship {
         this.color = color;
     }
 
+
     public void addPosition(String input) {
         if (positions == null) {
             positions = new ArrayList<>();
@@ -46,7 +47,44 @@ public class Ship {
             System.out.println("Enter position with letter and number!");
         }
 
+    }
 
+    public void addPosition(int inputHorizontal, int inputVertical) {
+        if (positions == null) {
+            positions = new ArrayList<>();
+        }
+
+        try {
+            Letter letter = letterFromNumber(inputHorizontal);
+            int number = inputVertical;
+            positions.add(new Position(letter, number));
+        } catch (NumberFormatException nfe) {
+            System.out.println("Enter position with letter and number!");
+        }
+
+    }
+
+    public static Letter letterFromNumber(int number) {
+        switch (number) {
+            case 0:
+                return Letter.A;
+            case 1:
+                return Letter.B;
+            case 2:
+                return Letter.C;
+            case 3:
+                return Letter.D;
+            case 4:
+                return Letter.E;
+            case 5:
+                return Letter.F;
+            case 6:
+                return Letter.G;
+            case 7:
+                return Letter.H;
+            default:
+                return Letter.A;
+        }
     }
 
     public boolean isDestroyed() {
