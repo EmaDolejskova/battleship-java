@@ -4,9 +4,9 @@ import com.diogonunes.jcdp.color.ColoredPrinter;
 import com.diogonunes.jcdp.color.api.Ansi;
 import org.scrum.psd.battleship.controller.GameController;
 import org.scrum.psd.battleship.controller.dto.Letter;
-import org.scrum.psd.battleship.controller.dto.LetterMock;
 import org.scrum.psd.battleship.controller.dto.Position;
 import org.scrum.psd.battleship.controller.dto.Ship;
+import org.scrum.psd.battleship.controller.dto.BattleField;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +18,8 @@ public class Main {
     public static List<Ship> enemyFleet;
     private static ColoredPrinter console;
     public static boolean isMock = true;
+
+    private static BattleField battleField = isMock ? new BattleField(4, 4) : new BattleField(8, 8);
 
     public static void main(String[] args) {
         if (args.length > 0) {
@@ -44,7 +46,6 @@ public class Main {
         console.println("Mock is " + (isMock ? "enabled" : "disabled"));
 
         InitializeGame();
-
         StartGame();
     }
 
@@ -69,10 +70,18 @@ public class Main {
                 System.exit(0);
             }
             console.setForegroundColor(Ansi.FColor.WHITE);
-            position = getRandomPosition();
+            // Computer is trying hit with Random to position
+//            position = getRandomPosition();
+
+            position = getComputerRandomPosition(battleField);
+            if (position == null){
+                console.setForegroundColor(Ansi.FColor.RED);
+                console.println(String.format("There is no more positions to shoot! Game over!"));
+                System.exit(0);
+            }
             isHit = GameController.checkIsHit(myFleet, position);
             console.println("");
-            if (isHit) console.setForegroundColor(Ansi.FColor.RED);
+            if (isHit) console.setForegroundColor(Ansi.FColor.MAGENTA);
             else console.setForegroundColor(Ansi.FColor.BLUE);
             console.println(String.format("Computer shoot in %s%s and %s", position.getColumn(), position.getRow(), isHit ? "hit your ship !" : "miss"));
 
@@ -150,26 +159,44 @@ public class Main {
         return new Position(letter, number);
     }
 
-    private static Position getRandomPosition() {
-        int rows;
-        int lines;
-        Letter letter;
-        if (isMock) {
-            rows = 4;
-             lines = 4;
-        }else{
-             rows = 8;
-             lines = 8;
-        }
+    public static Position getRandomPosition() {
+        return getRandomPosition(battleField.rows, battleField.cols);
+    }
+
+    public static Position getRandomPosition(int rows, int cols) {
         Random random = new Random();
-        if(isMock) {
-            letter = Letter.values()[random.nextInt(lines)];
-        }else{
-            letter = Letter.values()[random.nextInt(lines)]; //todo make field smaller
-        }
+        Letter letter = Letter.values()[random.nextInt(cols)];
         int number = random.nextInt(rows);
         Position position = new Position(letter, number);
         return position;
+    }
+
+    public static Position getRandomPosition(BattleField bf) {
+//        Random random = new Random();
+//        Letter letter = Letter.values()[random.nextInt(bf.cols)];
+//        int number = random.nextInt(bf.rows);
+//        Position position = new Position(letter, number);
+//        boolean success = bf.removePosition(position);
+//        System.out.println("Remove of " + position + " succeeded? " + success);
+//        return position;
+        return getComputerRandomPosition(bf);
+    }
+
+    public static Position getComputerRandomPosition(BattleField bf) {
+//        int size = bf.getAllAvailablePositions().size();
+//        for (int i = 0; i < size; i++) {
+//            System.out.println("size="+ bf.getAllAvailablePositions().size());
+        int index = (int) (Math.random() * bf.getAllAvailablePositions().size());
+        if (bf.getAllAvailablePositions().size() > 0) {
+            Position now = bf.getAllAvailablePositions().get(index);
+            bf.removePosition(now);
+            return now;
+        } else {
+            return null;
+        }
+//            System.out.println("Random Element is :" + now);
+
+//        }
     }
 
     private static void InitializeGame() {
@@ -198,31 +225,34 @@ public class Main {
 
     private static void InitializeEnemyFleet() {
         enemyFleet = GameController.generatedShips(isMock);
-        if (!isMock) {
-            enemyFleet.get(0).getPositions().add(new Position(Letter.B, 4));
-            enemyFleet.get(0).getPositions().add(new Position(Letter.B, 5));
-            enemyFleet.get(0).getPositions().add(new Position(Letter.B, 6));
-            enemyFleet.get(0).getPositions().add(new Position(Letter.B, 7));
-            enemyFleet.get(0).getPositions().add(new Position(Letter.B, 8));
-
-            enemyFleet.get(1).getPositions().add(new Position(Letter.E, 6));
-            enemyFleet.get(1).getPositions().add(new Position(Letter.E, 7));
-            enemyFleet.get(1).getPositions().add(new Position(Letter.E, 8));
-            enemyFleet.get(1).getPositions().add(new Position(Letter.E, 9));
-
-            enemyFleet.get(2).getPositions().add(new Position(Letter.A, 3));
-            enemyFleet.get(2).getPositions().add(new Position(Letter.B, 3));
-            enemyFleet.get(2).getPositions().add(new Position(Letter.C, 3));
-
-            enemyFleet.get(3).getPositions().add(new Position(Letter.F, 8));
-            enemyFleet.get(3).getPositions().add(new Position(Letter.G, 8));
-            enemyFleet.get(3).getPositions().add(new Position(Letter.H, 8));
-
-            enemyFleet.get(4).getPositions().add(new Position(Letter.C, 5));
-            enemyFleet.get(4).getPositions().add(new Position(Letter.C, 6));
-        } else {
-            enemyFleet.get(0).getPositions().add(new Position(Letter.A, 5));
-            enemyFleet.get(0).getPositions().add(new Position(Letter.A, 6));
-        }
+//        if (!isMock) {
+//            enemyFleet.get(0).getPositions().add(new Position(Letter.B, 4));
+//            enemyFleet.get(0).getPositions().add(new Position(Letter.B, 5));
+//            enemyFleet.get(0).getPositions().add(new Position(Letter.B, 6));
+//            enemyFleet.get(0).getPositions().add(new Position(Letter.B, 7));
+//            enemyFleet.get(0).getPositions().add(new Position(Letter.B, 8));
+//
+//            enemyFleet.get(1).getPositions().add(new Position(Letter.E, 6));
+//            enemyFleet.get(1).getPositions().add(new Position(Letter.E, 7));
+//            enemyFleet.get(1).getPositions().add(new Position(Letter.E, 8));
+//            enemyFleet.get(1).getPositions().add(new Position(Letter.E, 9));
+//
+//            enemyFleet.get(2).getPositions().add(new Position(Letter.A, 3));
+//            enemyFleet.get(2).getPositions().add(new Position(Letter.B, 3));
+//            enemyFleet.get(2).getPositions().add(new Position(Letter.C, 3));
+//
+//            enemyFleet.get(3).getPositions().add(new Position(Letter.F, 8));
+//            enemyFleet.get(3).getPositions().add(new Position(Letter.G, 8));
+//            enemyFleet.get(3).getPositions().add(new Position(Letter.H, 8));
+//
+//            enemyFleet.get(4).getPositions().add(new Position(Letter.C, 5));
+//            enemyFleet.get(4).getPositions().add(new Position(Letter.C, 6));
+//        } else {
+//            enemyFleet.get(0).getPositions().add(new Position(Letter.A, 5));
+//            enemyFleet.get(0).getPositions().add(new Position(Letter.A, 6));
+//            enemyFleet.get(1).getPositions().add(new Position(Letter.B, 5));
+//            enemyFleet.get(1).getPositions().add(new Position(Letter.B, 6));
+//
+//        }
     }
 }

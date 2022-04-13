@@ -36,7 +36,8 @@ public class GameController {
     public static List<Ship> initializeShips(boolean isMock) {
         if (isMock) {
             return Arrays.asList(
-                    new Ship("Patrol Boat", 2, Color.ORANGE));
+                    new Ship("Patrol Boat", 3, Color.ORANGE),
+                    new Ship("Second Patrol Boat", 3, Color.YELLOW));
         } else {
             return Arrays.asList(
                     new Ship("Aircraft Carrier", 5, Color.CADET_BLUE),
@@ -85,7 +86,7 @@ public class GameController {
         int yPos = rand.nextInt(isMock ? 7 : 3);
         boolean horizontalOrVertical = getRandomBoolean();
 
-        for (int i = 0; i < ship.getSize() - 1; i++) {
+        for (int i = 0; i < ship.getSize(); i++) {
             if (horizontalOrVertical) {
                 listOfCreatedPositions.add(new Position(Ship.letterFromNumber(xPos + i), yPos));
             } else {
