@@ -74,6 +74,11 @@ public class Main {
 //            position = getRandomPosition();
 
             position = getComputerRandomPosition(battleField);
+            if (position == null){
+                console.setForegroundColor(Ansi.FColor.RED);
+                console.println(String.format("There is no more positions to shoot! Game over!"));
+                System.exit(0);
+            }
             isHit = GameController.checkIsHit(myFleet, position);
             console.println("");
             if (isHit) console.setForegroundColor(Ansi.FColor.MAGENTA);
@@ -167,24 +172,30 @@ public class Main {
     }
 
     public static Position getRandomPosition(BattleField bf) {
-        Random random = new Random();
-        Letter letter = Letter.values()[random.nextInt(bf.cols)];
-        int number = random.nextInt(bf.rows);
-        Position position = new Position(letter, number);
-        boolean success = bf.removePosition(position);
-        System.out.println("Remove of " + position + " succeeded? " + success);
-        return position;
+//        Random random = new Random();
+//        Letter letter = Letter.values()[random.nextInt(bf.cols)];
+//        int number = random.nextInt(bf.rows);
+//        Position position = new Position(letter, number);
+//        boolean success = bf.removePosition(position);
+//        System.out.println("Remove of " + position + " succeeded? " + success);
+//        return position;
+        return getComputerRandomPosition(bf);
     }
 
     public static Position getComputerRandomPosition(BattleField bf) {
 //        int size = bf.getAllAvailablePositions().size();
 //        for (int i = 0; i < size; i++) {
 //            System.out.println("size="+ bf.getAllAvailablePositions().size());
-            int index = (int) (Math.random() * bf.getAllAvailablePositions().size());
+        int index = (int) (Math.random() * bf.getAllAvailablePositions().size());
+        if (bf.getAllAvailablePositions().size() > 0) {
             Position now = bf.getAllAvailablePositions().get(index);
-//            System.out.println("Random Element is :" + now);
             bf.removePosition(now);
             return now;
+        } else {
+            return null;
+        }
+//            System.out.println("Random Element is :" + now);
+
 //        }
     }
 
