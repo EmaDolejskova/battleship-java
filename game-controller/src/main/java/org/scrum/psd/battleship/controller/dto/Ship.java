@@ -140,6 +140,6 @@ public class Ship {
 
     @Override
     public String toString() {
-        return name;
+        return name+positions;
     }
 }

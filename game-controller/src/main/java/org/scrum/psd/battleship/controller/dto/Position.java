@@ -56,6 +56,6 @@ public class Position {
     }
     
     public String toString() {
-        return "" + this.column + this.row;
+        return "[" + this.column + ","+this.row+"]";
     }
 }
