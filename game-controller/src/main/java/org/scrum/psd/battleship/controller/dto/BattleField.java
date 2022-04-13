@@ -44,6 +44,14 @@ public class BattleField {
     }
     
     public Position nextPosition() {
-        return this.availablePositionsIterator.next();
+        if (this.availablePositionsIterator.hasNext()) {
+            return this.availablePositionsIterator.next();
+        } else {
+            return null;
+        }
+    }
+    
+    public boolean hasNextPosition() {
+        return this.availablePositionsIterator.hasNext();
     }
 }

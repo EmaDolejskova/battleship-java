@@ -73,6 +73,10 @@ public class Main {
             }
             console.setForegroundColor(Ansi.FColor.WHITE);
             position = getRandomPosition();
+            if (position == null) {
+                console.println("Computer has no available positions to shoot. Game over.");
+                System.exit(1);
+            } 
             isHit = GameController.checkIsHit(myFleet, position);
             console.println("");
             if (isHit) console.setForegroundColor(Ansi.FColor.RED);
@@ -158,12 +162,16 @@ public class Main {
     }
     
     public static Position getRandomPosition(BattleField bf) {
-        final Position position = bf.nextPosition();
-        bf.removeLast();
+        if (bf.hasNextPosition()) {
+            final Position position = bf.nextPosition();
+            bf.removeLast();
         
-        System.out.println(position + " removed");
+            System.out.println(position + " removed");
         
-        return position;
+            return position;
+        } else {
+            return null;
+        }
     }
 
     private static void InitializeGame() {
