@@ -20,7 +20,7 @@ public class Main {
     private static ColoredPrinter console;
     public static boolean isMock = true;
 
-    private static BattleField battleField = isMock ? new BattleField(4, 4) : new BattleField(8, 8);
+    private static final BattleField battleField = isMock ? new BattleField(4, 4) : new BattleField(8, 8);
 
     public static void main(String[] args) {
         if (args.length > 0) {
@@ -154,24 +154,15 @@ public class Main {
     }
 
     public static Position getRandomPosition() {
-        return getRandomPosition(battleField.rows, battleField.cols);
-    }
-    
-    public static Position getRandomPosition(int rows, int cols) {
-        Random random = new Random();
-        Letter letter = Letter.values()[random.nextInt(cols)]; //todo make field smaller
-        int number = random.nextInt(rows);
-        Position position = new Position(letter, number);
-        return position;
+        return getRandomPosition(Main.battleField);
     }
     
     public static Position getRandomPosition(BattleField bf) {
-        Random random = new Random();
-        Letter letter = Letter.values()[random.nextInt(bf.cols)]; //todo make field smaller
-        int number = random.nextInt(bf.rows);
-        Position position = new Position(letter, number);
-        boolean success = bf.removePosition(position);
-        System.out.println("Remove of " + position + " succeeded? " + success);
+        final Position position = bf.nextPosition();
+        bf.removeLast();
+        
+        System.out.println(position + " removed");
+        
         return position;
     }
 

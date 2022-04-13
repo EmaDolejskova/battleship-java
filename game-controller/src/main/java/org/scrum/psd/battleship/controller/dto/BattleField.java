@@ -5,9 +5,7 @@
  */
 package org.scrum.psd.battleship.controller.dto;
 
-import java.awt.PageAttributes;
-import java.util.HashSet;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  *
@@ -15,16 +13,17 @@ import java.util.TreeSet;
  */
 public class BattleField {
     public int rows, cols;
+    private final HashSet<Position> availablePositions;
+    private final Iterator<Position> availablePositionsIterator;
     
     public BattleField(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;
         this.availablePositions = allAvailablePositions();
+        this.availablePositionsIterator = this.availablePositions.iterator();
     }
-    
-    private HashSet<Position> availablePositions;
-    
-    public HashSet<Position> allAvailablePositions() {
+
+    private HashSet<Position> allAvailablePositions() {
         HashSet<Position> ap = new HashSet<Position>();
 
         for (int i = 1; i <= this.cols; i++) {
@@ -35,10 +34,16 @@ public class BattleField {
             }
         }
         
+        System.out.println("All positions: " + ap);
+        
         return ap;
     }
     
-    public boolean removePosition(Position p) {
-        return this.availablePositions.remove(p);
+    public void removeLast() {
+        this.availablePositionsIterator.remove();
+    }
+    
+    public Position nextPosition() {
+        return this.availablePositionsIterator.next();
     }
 }
